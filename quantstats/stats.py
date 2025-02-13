@@ -521,7 +521,8 @@ def cagr(returns, rf=0.0, compounded=True, periods=252):
     else:
         total = _np.sum(total, axis=0)
 
-    years = (returns.index[-1] - returns.index[0]).days / periods
+    # fix : https://github.com/Lumiwealth/quantstats_lumi/issues/68#issue-2771209589
+    years = (1 + (returns.index[-1] - returns.index[0]).days) / periods
 
     res = abs(total + 1.0) ** (1.0 / years) - 1
 
